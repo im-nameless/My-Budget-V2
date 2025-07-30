@@ -14,6 +14,7 @@ interface User {
 interface AuthContextType {
   user: User | null
   login: (email: string, password: string) => Promise<boolean>
+  register: (name: string, email: string, password: string) => Promise<{ success: boolean; error?: string }>
   logout: () => void
   updateProfile: (updates: Partial<User>) => Promise<boolean>
   isLoading: boolean
@@ -86,8 +87,48 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     return false
   }
 
+  const register = async (
+    name: string,
+    email: string,
+    password: string,
+  ): Promise<{ success: boolean; error?: string }> => {
+    setIsLoading(true)
+
+    // Simulate API call delay
+    await new Promise((resolve) => setTimeout(resolve, 1000))
+
+    // Check if user already exists
+    const existingUser = mockUsers.find((u) => u.email === email)
+    if (existingUser) {
+      setIsLoading(false)
+      return { success: false, error: "User with this email already exists" }
+    }
+
+    // Create new user
+    const newUser = {
+      id: Date.now().toString(),
+      name,
+      email,
+      password,
+      profilePicture: "/placeholder.svg?height=100&width=100",
+      createdAt: new Date().toISOString(),
+    }
+
+    // Add to mock users array
+    mockUsers.push(newUser)
+
+    // Log in the new user
+    const { password: _, ...userWithoutPassword } = newUser
+    setUser(userWithoutPassword)
+    localStorage.setItem("user", JSON.stringify(userWithoutPassword))
+
+    setIsLoading(false)
+    return { success: true }
+  }
+
   const logout = () => {
     setUser(null)
+    Cookies.remove("user");
     localStorage.removeItem("user")
   }
 
@@ -108,7 +149,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }
 
   return (
-    <AuthContext.Provider value={{ user, login, logout, updateProfile, isLoading }}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={{ user, login, register, logout, updateProfile, isLoading }}>
+      {children}
+    </AuthContext.Provider>
   )
 }
 

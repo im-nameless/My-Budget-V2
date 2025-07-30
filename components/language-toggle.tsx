@@ -84,7 +84,6 @@ const translations = {
     "addTransaction.addingExpense": "Adding Expense",
     "addTransaction.recordMoneyOut": "Record money going out of your account",
     "addTransaction.amount": "Amount",
-    "addTransaction.description": "Description",
     "addTransaction.category": "Category",
     "addTransaction.date": "Date",
     "addTransaction.pickDate": "Pick a date",
@@ -179,7 +178,43 @@ const translations = {
     "login.signingIn": "Signing In...",
     "login.invalidCredentials": "Invalid email or password",
     "login.loginError": "An error occurred during login",
+    "login.fillAllFields": "Please fill in all fields",
     "login.demoCredentials": "Demo Credentials",
+    "login.dontHaveAccount": "Don't have an account?",
+    "login.createAccount": "Create Account",
+
+    // Register page
+    "register.createAccount": "Create Account",
+    "register.createAccountDescription": "Create a new account to get started",
+    "register.fullName": "Full Name",
+    "register.namePlaceholder": "Enter your full name",
+    "register.phone": "Phone",
+    "register.phonePlaceholder": "Enter your phone",
+    "register.birthdate": "Birthdate",
+    "register.birthdatePlaceholder": "Select your birthdate",
+    "register.email": "Email",
+    "register.emailPlaceholder": "Enter your email",
+    "register.password": "Password",
+    "register.passwordPlaceholder": "Create a password",
+    "register.confirmPassword": "Confirm Password",
+    "register.confirmPasswordPlaceholder": "Confirm your password",
+    "register.creatingAccount": "Creating Account...",
+    "register.alreadyHaveAccount": "Already have an account?",
+    "register.signIn": "Sign In",
+    "register.backToLogin": "Back to Login",
+    "register.passwordRequirements": "Password Requirements",
+    "register.passwordMinLengthReq": "At least 6 characters",
+    "register.passwordMatchReq": "Passwords must match",
+    "register.passwordSpecialCharacters": "The password must contain at least one special character, one number, and one uppercase letter",
+    "register.nameRequired": "Name is required",
+    "register.nameMinLength": "Name must be at least 2 characters",
+    "register.emailRequired": "Email is required",
+    "register.emailInvalid": "Please enter a valid email",
+    "register.passwordRequired": "Password is required",
+    "register.passwordMinLength": "Password must be at least 6 characters",
+    "register.confirmPasswordRequired": "Please confirm your password",
+    "register.passwordMismatch": "Passwords do not match",
+    "register.registrationError": "An error occurred during registration",
 
     // Sidebar
     "sidebar.preferences": "Preferences",
@@ -273,7 +308,6 @@ const translations = {
     "addTransaction.addingExpense": "Adicionando Despesa",
     "addTransaction.recordMoneyOut": "Registre dinheiro saindo da sua conta",
     "addTransaction.amount": "Valor",
-    "addTransaction.description": "Descrição",
     "addTransaction.category": "Categoria",
     "addTransaction.date": "Data",
     "addTransaction.pickDate": "Escolha uma data",
@@ -370,7 +404,43 @@ const translations = {
     "login.signingIn": "Entrando...",
     "login.invalidCredentials": "Email ou senha inválidos",
     "login.loginError": "Ocorreu um erro durante o login",
+    "login.fillAllFields": "Por favor preencha todos os campos",
     "login.demoCredentials": "Credenciais de Demo",
+    "login.dontHaveAccount": "Não tem uma conta?",
+    "login.createAccount": "Criar Conta",
+
+    // Register page
+    "register.createAccount": "Criar Conta",
+    "register.createAccountDescription": "Crie uma nova conta para começar",
+    "register.fullName": "Nome Completo",
+    "register.namePlaceholder": "Digite seu nome completo",
+    "register.phone": "Telefone",
+    "register.phonePlaceholder": "Digite seu telefone",
+    "register.birthdate": "Data de Nascimento",
+    "register.birthdatePlaceholder": "Selecione sua data de nascimento",
+    "register.email": "Email",
+    "register.emailPlaceholder": "Digite seu email",
+    "register.password": "Senha",
+    "register.passwordPlaceholder": "Crie uma senha",
+    "register.confirmPassword": "Confirmar Senha",
+    "register.confirmPasswordPlaceholder": "Confirme sua senha",
+    "register.creatingAccount": "Criando Conta...",
+    "register.alreadyHaveAccount": "Já tem uma conta?",
+    "register.signIn": "Entrar",
+    "register.backToLogin": "Voltar ao Login",
+    "register.passwordRequirements": "Requisitos da Senha",
+    "register.passwordMinLengthReq": "Pelo menos 6 caracteres",
+    "register.passwordMatchReq": "As senhas devem coincidir",
+    "register.passwordSpecialCharacters": "A senha deve conter pelo menos um caractere especial, um número e uma letra maiúscula",
+    "register.nameRequired": "Nome é obrigatório",
+    "register.nameMinLength": "Nome deve ter pelo menos 2 caracteres",
+    "register.emailRequired": "Email é obrigatório",
+    "register.emailInvalid": "Por favor digite um email válido",
+    "register.passwordRequired": "Senha é obrigatória",
+    "register.passwordMinLength": "Senha deve ter pelo menos 6 caracteres",
+    "register.confirmPasswordRequired": "Por favor confirme sua senha",
+    "register.passwordMismatch": "As senhas não coincidem",
+    "register.registrationError": "Ocorreu um erro durante o registro",
 
     // Sidebar
     "sidebar.preferences": "Preferências",
@@ -430,8 +500,8 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
   const t = (key: string, params?: Record<string, string | number>): string => {
     if (!mounted) return key
 
-    const translation =
-      translations[language.code as keyof typeof translations]?.[key as keyof typeof translation] || key
+    const translationObj = translations[language.code as keyof typeof translations]
+    const translation = translationObj?.[key as keyof typeof translationObj] || key
 
     if (params) {
       return Object.entries(params).reduce((str, [paramKey, paramValue]) => {
