@@ -34,10 +34,8 @@ export default function LoginPage() {
     }
 
     const success = await login(email, password)
-
-    if (success) {
-      router.push("/")
-    } else {
+    console.log("Login attempt:", { email, password, success })
+    if (!success) {
       setError(t("login.invalidCredentials"))
     }
   }

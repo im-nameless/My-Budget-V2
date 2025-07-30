@@ -29,7 +29,7 @@ const LanguageContext = React.createContext<LanguageContextType | undefined>(und
 const translations = {
   en: {
     // Header
-    "app.title": "ExpenseTracker",
+    "app.title": "My Budget",
     "header.addTransaction": "Add Transaction",
     "header.pickDateRange": "Pick a date range",
 
@@ -254,7 +254,7 @@ const translations = {
   },
   pt: {
     // Header
-    "app.title": "ControleDespesas",
+    "app.title": "My Budget",
     "header.addTransaction": "Adicionar Transação",
     "header.pickDateRange": "Selecione um período",
 

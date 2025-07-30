@@ -1,6 +1,7 @@
 "use client"
 
 import type { Transaction, TransactionInput, DashboardData } from "@/types/api"
+import { cookies } from "next/headers"
 
 // API Configuration
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001/api"
@@ -19,7 +20,7 @@ class ApiClient {
     }
 
     // Add auth token if available
-    const token = localStorage.getItem("auth_token")
+    const token = (await cookies()).get('auth-token')?.value;
     if (token) {
       config.headers = {
         ...config.headers,

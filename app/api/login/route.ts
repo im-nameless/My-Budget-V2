@@ -12,9 +12,9 @@ export async function POST(req: NextRequest) {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ email, password }),
   });
-  
+
   console.log('API response status:', response);
-  
+
   const data = await response.json();
 
   console.log('API response data:', data);
@@ -23,5 +23,8 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: data.error || 'Login failed' }, { status: response.status });
   }
 
-  return NextResponse.json(data);
+  return NextResponse.json(
+    { data: data, success: true },
+    { status: 201 }
+  );
 }
