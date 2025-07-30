@@ -2,7 +2,6 @@
 
 import { useState, useMemo } from "react"
 import {
-  ArrowLeft,
   Search,
   Filter,
   Trash2,
@@ -36,9 +35,8 @@ import { Badge } from "@/components/ui/badge"
 import { format, isWithinInterval, startOfDay, endOfDay } from "date-fns"
 import { cn } from "@/lib/utils"
 import Link from "next/link"
-import { ThemeToggle } from "@/components/theme-toggle"
-import { useCurrency, CurrencyToggle } from "@/components/currency-toggle"
-import { useLanguage, LanguageToggle } from "@/components/language-toggle"
+import { useCurrency } from "@/components/currency-toggle"
+import { useLanguage } from "@/components/language-toggle"
 
 // Mock transaction data - using the same structure as the working v5 code
 const mockTransactions = [
@@ -252,35 +250,7 @@ export default function TransactionsPage() {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Header */}
-      <header className="border-b border-border bg-card">
-        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-          <div className="flex items-center space-x-4">
-            <Link href="/">
-              <Button variant="ghost" size="icon">
-                <ArrowLeft className="w-5 h-5" />
-              </Button>
-            </Link>
-            <div className="w-8 h-8 bg-mustard rounded-lg flex items-center justify-center">
-              <DollarSign className="w-5 h-5 text-black" />
-            </div>
-            <h1 className="text-2xl font-bold text-foreground">{t("transactions.title")}</h1>
-          </div>
-          <div className="flex items-center space-x-4">
-            <Link href="/add-transaction">
-              <Button className="bg-mustard hover:bg-mustard-dark text-black">
-                <DollarSign className="w-4 h-4 mr-2" />
-                {t("header.addTransaction")}
-              </Button>
-            </Link>
-            <LanguageToggle />
-            <CurrencyToggle />
-            <ThemeToggle />
-          </div>
-        </div>
-      </header>
-
-      <main className="container mx-auto px-4 py-8">
+      <main className="px-4 py-8">
         {/* Summary Cards */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
           <Card>

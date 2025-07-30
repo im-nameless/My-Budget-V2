@@ -2,7 +2,7 @@
 
 import type React from "react"
 import { useState } from "react"
-import { ArrowLeft, Plus, Calendar, DollarSign, Repeat, Loader2 } from "lucide-react"
+import { Plus, Calendar, DollarSign, Repeat, Loader2 } from "lucide-react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -17,9 +17,8 @@ import { format } from "date-fns"
 import { cn } from "@/lib/utils"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
-import { ThemeToggle } from "@/components/theme-toggle"
-import { useCurrency, CurrencyToggle } from "@/components/currency-toggle"
-import { useLanguage, LanguageToggle } from "@/components/language-toggle"
+import { useCurrency } from "@/components/currency-toggle"
+import { useLanguage } from "@/components/language-toggle"
 import { useTransactions } from "@/hooks/useTransactions"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 
@@ -110,29 +109,7 @@ export default function AddTransaction() {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Header */}
-      <header className="border-b border-border bg-card">
-        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-          <div className="flex items-center space-x-4">
-            <Link href="/">
-              <Button variant="ghost" size="icon">
-                <ArrowLeft className="w-5 h-5" />
-              </Button>
-            </Link>
-            <div className="w-8 h-8 bg-mustard rounded-lg flex items-center justify-center">
-              <Plus className="w-5 h-5 text-black" />
-            </div>
-            <h1 className="text-2xl font-bold text-foreground">{t("addTransaction.title")}</h1>
-          </div>
-          <div className="flex items-center space-x-4">
-            <LanguageToggle />
-            <CurrencyToggle />
-            <ThemeToggle />
-          </div>
-        </div>
-      </header>
-
-      <main className="container mx-auto px-4 py-8 max-w-2xl">
+      <main className="px-4 py-8 max-w-2xl mx-auto">
         {error && (
           <Alert className="mb-6 border-destructive">
             <AlertDescription className="text-destructive">{error}</AlertDescription>

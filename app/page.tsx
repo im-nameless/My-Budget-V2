@@ -1,11 +1,8 @@
 "use client"
 
 import { useState } from "react"
-import { CalendarDays, DollarSign, TrendingDown, TrendingUp, BarChart3, Plus } from "lucide-react"
+import { DollarSign, TrendingDown, TrendingUp, BarChart3 } from "lucide-react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Calendar } from "@/components/ui/calendar"
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
 import {
   Bar,
@@ -19,12 +16,10 @@ import {
   YAxis,
   CartesianGrid,
 } from "recharts"
-import { format, subMonths, startOfMonth, endOfMonth } from "date-fns"
+import { subMonths, startOfMonth, endOfMonth } from "date-fns"
 import { cn } from "@/lib/utils"
-import { ThemeToggle } from "@/components/theme-toggle"
-import Link from "next/link"
-import { useCurrency, CurrencyToggle } from "@/components/currency-toggle"
-import { useLanguage, LanguageToggle } from "@/components/language-toggle"
+import { useCurrency } from "@/components/currency-toggle"
+import { useLanguage } from "@/components/language-toggle"
 
 // Mock data for dashboard - same structure as v5
 const mockDashboardData = {
@@ -71,64 +66,7 @@ export default function Dashboard() {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Header */}
-      <header className="border-b border-border bg-card">
-        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-          <div className="flex items-center space-x-4">
-            <div className="w-8 h-8 bg-mustard rounded-lg flex items-center justify-center">
-              <DollarSign className="w-5 h-5 text-black" />
-            </div>
-            <h1 className="text-2xl font-bold text-foreground">{t("app.title")}</h1>
-          </div>
-          <div className="flex items-center space-x-4">
-            <Popover>
-              <PopoverTrigger asChild>
-                <Button variant="outline" className="w-[280px] justify-start text-left font-normal bg-transparent">
-                  <CalendarDays className="mr-2 h-4 w-4" />
-                  {dateRange?.from ? (
-                    dateRange.to ? (
-                      <>
-                        {format(dateRange.from, "LLL dd, y")} - {format(dateRange.to, "LLL dd, y")}
-                      </>
-                    ) : (
-                      format(dateRange.from, "LLL dd, y")
-                    )
-                  ) : (
-                    <span>{t("header.pickDateRange")}</span>
-                  )}
-                </Button>
-              </PopoverTrigger>
-              <PopoverContent className="w-auto p-0" align="end">
-                <Calendar
-                  initialFocus
-                  mode="range"
-                  defaultMonth={dateRange?.from}
-                  selected={dateRange}
-                  onSelect={setDateRange}
-                  numberOfMonths={2}
-                />
-              </PopoverContent>
-            </Popover>
-            <Link href="/add-transaction">
-              <Button className="bg-mustard hover:bg-mustard-dark text-black">
-                <Plus className="w-4 h-4 mr-2" />
-                {t("header.addTransaction")}
-              </Button>
-            </Link>
-            <Link href="/transactions">
-              <Button variant="outline" className="bg-transparent">
-                <DollarSign className="w-4 h-4 mr-2" />
-                View All
-              </Button>
-            </Link>
-            <LanguageToggle />
-            <CurrencyToggle />
-            <ThemeToggle />
-          </div>
-        </div>
-      </header>
-
-      <main className="container mx-auto px-4 py-8">
+      <main className="px-4 py-8">
         {/* Summary Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           <Card>
