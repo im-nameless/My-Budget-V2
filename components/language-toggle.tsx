@@ -215,6 +215,7 @@ const translations = {
     "register.confirmPasswordRequired": "Please confirm your password",
     "register.passwordMismatch": "Passwords do not match",
     "register.registrationError": "An error occurred during registration",
+    "register.success": "User registered successfully",
 
     // Sidebar
     "sidebar.preferences": "Preferences",
@@ -440,8 +441,9 @@ const translations = {
     "register.passwordMinLength": "Senha deve ter pelo menos 6 caracteres",
     "register.confirmPasswordRequired": "Por favor confirme sua senha",
     "register.passwordMismatch": "As senhas não coincidem",
-    "register.registrationError": "Ocorreu um erro durante o registro",
-
+    "register.registrationError": "Ocorreu um erro durante o cadastro",
+    "register.success": "Usuário cadastrado com sucesso",
+    
     // Sidebar
     "sidebar.preferences": "Preferências",
     "sidebar.language": "Idioma",

@@ -48,13 +48,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     // Check for saved user session
     const savedUser = localStorage.getItem("user")
-    console.log(savedUser)
     if (savedUser) {
-      console.log("Found saved user in localStorage")
       try {
         setUser(JSON.parse(savedUser))
       } catch (error) {
-        console.error("Error parsing saved user:", error)
         localStorage.removeItem("user")
       }
     }
@@ -63,12 +60,19 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const login = async (email: string, password: string): Promise<boolean> => {
     setIsLoading(true)
-
     // Simulate API call delay
     await new Promise((resolve) => setTimeout(resolve, 1000))
 
+    const response = await fetch("api/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        email: email.trim(),
+        password: password.trim()
+      }),
+    });
+
     const foundUser = mockUsers.find((u) => u.email === email && u.password === password)
-    console.log("Login attempt:", { email, password, foundUser })
     if (foundUser) {
       const { password: _, ...userWithoutPassword } = foundUser
       setUser(userWithoutPassword)

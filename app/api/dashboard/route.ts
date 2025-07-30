@@ -61,8 +61,8 @@ export async function GET(request: NextRequest) {
 
     const expenseCategoriesArray = Object.entries(expenseCategories).map(([name, value]) => ({
       name,
-      value,
-      percentage: Math.round((value / totalExpenses) * 100),
+      value: value as number,
+      percentage: Math.round(((value as number) / totalExpenses) * 100),
     }))
 
     const dashboardData = {

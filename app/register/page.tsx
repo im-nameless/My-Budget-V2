@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Alert, AlertDescription } from "@/components/ui/alert"
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { useAuth } from "@/contexts/auth-context"
 import { useLanguage } from "@/components/language-toggle"
 
@@ -24,6 +24,7 @@ export default function RegisterPage() {
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const [error, setError] = useState("")
+  const [success, setSuccess] = useState(false)
   const [validationErrors, setValidationErrors] = useState<Record<string, string>>({})
 
   const { register, isLoading } = useAuth()
@@ -61,7 +62,21 @@ export default function RegisterPage() {
     return Object.keys(errors).length === 0
   }
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  // Clear fields
+  const clearFields = () => {
+    setName("")
+    setEmail("")
+    setPassword("")
+    setPhone("")
+    setBirthdate("")
+    setConfirmPassword("")
+    setShowPassword(false)
+    setShowConfirmPassword(false)
+    setError("")
+    setValidationErrors({})
+  }
+
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     setError("")
 
@@ -103,8 +118,14 @@ export default function RegisterPage() {
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-4">
               {error && (
-                <Alert variant="destructive">
+                <Alert variant="danger">
                   <AlertDescription>{error}</AlertDescription>
+                </Alert>
+              )}
+
+              {success && (
+                <Alert variant="success">
+                  <AlertDescription>{t("register.success")}</AlertDescription>
                 </Alert>
               )}
 
@@ -244,7 +265,36 @@ export default function RegisterPage() {
               </div>
 
               {/* Submit Button */}
-              <Button type="submit" className="w-full bg-mustard hover:bg-mustard/90 text-white" disabled={isLoading}>
+              <Button type="submit" className="w-full bg-mustard hover:bg-mustard/90 text-white" 
+              onClick={async (e) => {
+                e.preventDefault();
+                setError("");
+                if (!validateForm()) return;
+
+                try {
+                  const response = await fetch("api/register", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                      name: name.trim(),
+                      email: email.trim(),
+                      password: password.trim(),
+                      phone: phone.trim(),
+                      birthdate: birthdate.trim(),
+                    }),
+                  });
+                  const data = await response.json();
+                  if (data.success) {
+                    clearFields();
+                    setSuccess(true);
+                  } else {
+                    setError(data.error || t("register.registrationError"));
+                  }
+                } catch {
+                  setError(t("register.registrationError"));
+                }
+              }}
+              disabled={isLoading}>
                 {isLoading ? t("register.creatingAccount") : t("register.createAccount")}
               </Button>
             </form>
