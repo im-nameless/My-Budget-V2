@@ -5,14 +5,15 @@ export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
 
   // Check if user is authenticated (simplified check)
-  const hasUser = request.cookies.get("user") || (typeof window !== "undefined" && localStorage.getItem("user"))
+  const hasUser = request.cookies.get("user")
 
   // Public routes that don't require authentication
   const publicRoutes = ["/login"]
   const isPublicRoute = publicRoutes.includes(pathname)
-
+  console.log(hasUser)
   // If user is not authenticated and trying to access protected route
   if (!hasUser && !isPublicRoute) {
+    console.log(typeof window)
     return NextResponse.redirect(new URL("/login", request.url))
   }
 

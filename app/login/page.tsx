@@ -131,7 +131,7 @@ export default function LoginPage() {
             <p className="text-sm font-medium text-muted-foreground mb-2">{t("login.demoCredentials")}:</p>
             <div className="space-y-1 text-xs text-muted-foreground">
               <p>
-                <strong>English:</strong> giovanni.teixeira@hotmail.com / senha123
+                <strong>English:</strong> john@example.com / password123
               </p>
               <p>
                 <strong>Português:</strong> maria@example.com / senha123

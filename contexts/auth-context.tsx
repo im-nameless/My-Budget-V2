@@ -2,7 +2,7 @@
 
 import type React from "react"
 import { createContext, useContext, useState, useEffect } from "react"
-
+import Cookies from "js-cookie";
 interface User {
   id: string
   name: string
@@ -26,8 +26,8 @@ const mockUsers = [
   {
     id: "1",
     name: "Giovanni Alves",
-    email: "giovanni.teixeira@hotmail.com",
-    password: "senha123",
+    email: "john@example.com",
+    password: "password123",
     profilePicture: "/placeholder.svg?height=100&width=100",
     createdAt: "2024-01-01T00:00:00.000Z",
   },
@@ -44,11 +44,12 @@ const mockUsers = [
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null)
   const [isLoading, setIsLoading] = useState(true)
-
   useEffect(() => {
     // Check for saved user session
     const savedUser = localStorage.getItem("user")
+    console.log(savedUser)
     if (savedUser) {
+      console.log("Found saved user in localStorage")
       try {
         setUser(JSON.parse(savedUser))
       } catch (error) {
@@ -66,11 +67,17 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     await new Promise((resolve) => setTimeout(resolve, 1000))
 
     const foundUser = mockUsers.find((u) => u.email === email && u.password === password)
-
+    console.log("Login attempt:", { email, password, foundUser })
     if (foundUser) {
       const { password: _, ...userWithoutPassword } = foundUser
       setUser(userWithoutPassword)
       localStorage.setItem("user", JSON.stringify(userWithoutPassword))
+      Cookies.set("user", JSON.stringify(user), {
+        expires: 7,         // days
+        path: "/",          // available everywhere
+        secure: true,       // only over HTTPS
+        sameSite: "lax",    // or "strict"
+      });
       setIsLoading(false)
       return true
     }

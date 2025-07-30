@@ -232,7 +232,7 @@ const translations = {
     "dashboard.thisPeriod": "neste período",
     "dashboard.basedOnMonths": "Baseado em {count} meses",
     "dashboard.fromLastPeriod": "do período anterior",
-    "dashboard.title": "Painel",
+    "dashboard.title": "Início",
 
     // Charts
     "charts.incomeVsExpenses": "Receita vs Despesas",
